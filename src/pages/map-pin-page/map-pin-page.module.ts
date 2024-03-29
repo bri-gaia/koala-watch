@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import {IonicModule, NavController, NavParams, Platform} from '@ionic/angular';
+import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
 import { MapPinPage } from './map-pin-page';
-import {RouterModule, Routes} from "@angular/router";
-import {ActiveRecordService} from "../../providers/activerecordservice/active-record.service";
-import {LatLng} from "@capacitor/google-maps/dist/typings/definitions";
-import {EventService} from "../../shared/services/event.service";
+import { RouterModule, Routes } from "@angular/router";
+import { ActiveRecordService } from "../../providers/activerecordservice/active-record.service";
+import { LatLng } from "@capacitor/google-maps/dist/typings/definitions";
+import { EventService } from "../../shared/services/event.service";
 
 const routes: Routes = [
   {
@@ -22,11 +22,12 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers: [
-      NavController,
-      NavParams,
-      EventService,
-      Platform,
-      ActiveRecordService
+    NavController,
+    NavParams,
+    EventService,
+    Platform,
+    ActiveRecordService
   ]
 })
-export class MapPinPageModule {}
+export class MapPinPageModule {
+}

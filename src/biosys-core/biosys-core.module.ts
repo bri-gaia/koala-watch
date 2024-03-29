@@ -6,8 +6,9 @@ import { PyToAngularDateFormatConversionPipe } from './pipes/date-conversion.pip
 import { ValuesPipe } from './pipes/object.pipe';
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [TruncatePipe, PyToAngularDateFormatConversionPipe, ValuesPipe],
-    exports: [TruncatePipe, PyToAngularDateFormatConversionPipe, ValuesPipe]
+  imports: [CommonModule],
+  declarations: [TruncatePipe, PyToAngularDateFormatConversionPipe, ValuesPipe],
+  exports: [TruncatePipe, PyToAngularDateFormatConversionPipe, ValuesPipe]
 })
-export class BiosysCoreModule {}
+export class BiosysCoreModule {
+}

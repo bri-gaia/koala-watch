@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import {IonicModule, NavController, NavParams} from '@ionic/angular';
+import { IonicModule, NavController, NavParams } from '@ionic/angular';
 import { PrivacyPolicyPage } from './privacy-policy';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import {RouterModule, Routes} from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
   {
@@ -24,8 +24,8 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers: [
-      NavController,
-      NavParams
+    NavController,
+    NavParams
   ]
 })
 export class PrivacyPolicyPageModule {

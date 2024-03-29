@@ -10,14 +10,14 @@ import { APP_NAME, UPDATE_BUTTON_NAME } from '../../shared/utils/consts';
  */
 
 @Component({
-    selector: 'page-privacy-policy',
-    templateUrl: 'privacy-policy.html',
+  selector: 'page-privacy-policy',
+  templateUrl: 'privacy-policy.html',
 })
 export class PrivacyPolicyPage {
 
-    public APP_NAME = APP_NAME;
-    public UPDATE_BUTTON_NAME = UPDATE_BUTTON_NAME;
+  public APP_NAME = APP_NAME;
+  public UPDATE_BUTTON_NAME = UPDATE_BUTTON_NAME;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
 }

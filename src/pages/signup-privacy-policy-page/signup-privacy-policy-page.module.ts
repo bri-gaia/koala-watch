@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import {IonicModule, ModalController} from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 
 import { SignupPrivacyPolicyPagePageRoutingModule } from './signup-privacy-policy-page-routing.module';
 
 import { SignupPrivacyPolicyPagePage } from './signup-privacy-policy-page.page';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @NgModule({
   imports: [
@@ -17,9 +17,10 @@ import {Router} from "@angular/router";
     SignupPrivacyPolicyPagePageRoutingModule
   ],
   providers: [
-      ModalController,
-      Router
+    ModalController,
+    Router
   ],
   declarations: [SignupPrivacyPolicyPagePage]
 })
-export class SignupPrivacyPolicyPagePageModule {}
+export class SignupPrivacyPolicyPagePageModule {
+}

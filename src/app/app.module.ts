@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from "@angular/common";
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import {IonicModule, IonicRouteStrategy, MenuController} from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, MenuController } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouteReuseStrategy, RouterModule } from "@angular/router";
@@ -21,7 +21,7 @@ import { SharedModule } from "../shared/shared.module";
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from "@fortawesome/free-regular-svg-icons";
-import {AuthenticatedService} from "../shared/services/authenticated.service";
+import { AuthenticatedService } from "../shared/services/authenticated.service";
 
 @NgModule({
   exports: [RouterModule],
@@ -64,8 +64,8 @@ import {AuthenticatedService} from "../shared/services/authenticated.service";
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
     },
-      MenuController,
-      AuthenticatedService
+    MenuController,
+    AuthenticatedService
   ]
 })
 export class AppModule {

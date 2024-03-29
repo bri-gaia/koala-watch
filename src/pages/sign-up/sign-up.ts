@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AlertController, IonItem, LoadingController, NavController, NavParams} from '@ionic/angular';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AlertController, IonItem, LoadingController, NavController, NavParams } from '@ionic/angular';
 import { APP_NAME } from '../../shared/utils/consts';
 import { FormBuilder, Validators } from '@angular/forms';
 import { formatAPIError } from '../../biosys-core/utils/functions';
 import { ApiResponse } from '../../shared/interfaces/mobile.interfaces';
 import { SignupService } from '../../shared/services/signup.service';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 /**
  * Generated class for the SignUpPage page.
@@ -39,10 +39,10 @@ export class SignUpPage implements OnInit {
   }
 
   constructor(private router: Router,
-    private signupService: SignupService,
-    private formBuilder: FormBuilder,
-    private loadingCtrl: LoadingController,
-    private alertController: AlertController) {
+              private signupService: SignupService,
+              private formBuilder: FormBuilder,
+              private loadingCtrl: LoadingController,
+              private alertController: AlertController) {
     this.form = this.formBuilder.group({
       'name_user': ['', Validators.required],
       'name_given': ['', Validators.required],

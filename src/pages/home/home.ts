@@ -12,9 +12,9 @@ import {
 } from '../../shared/utils/consts';
 import { isDatasetCensus } from '../../shared/utils/functions';
 import { filter } from "rxjs";
-import {list} from "ionicons/icons";
-import {EventService} from "../../shared/services/event.service";
-import {Router} from "@angular/router";
+import { list } from "ionicons/icons";
+import { EventService } from "../../shared/services/event.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'page-home',
@@ -38,8 +38,8 @@ export class HomePage implements OnInit {
   public isMapTabSelected = false;
 
   constructor(private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController, private storageService: StorageService,
-    private uploadService: UploadService, private event: EventService, private router: Router
+              private toastCtrl: ToastController, private storageService: StorageService,
+              private uploadService: UploadService, private event: EventService, private router: Router
   ) {
     this.records = [];
   }
@@ -64,7 +64,7 @@ export class HomePage implements OnInit {
     }
 
     this.loading = await this.loadingCtrl.create({
-        message: 'Uploading records'
+      message: 'Uploading records'
     });
     await this.loading.present();
     this.uploadService.uploadValidRecords().subscribe({
@@ -90,7 +90,7 @@ export class HomePage implements OnInit {
           duration: TOAST_DURATION,
           cssClass: 'toast-message'
         }).then((toast) => {
-            toast.present
+          toast.present
         });
 
         this.uploadService.uploadPendingRecordPhotos().subscribe();
@@ -102,7 +102,7 @@ export class HomePage implements OnInit {
   public onClickedNewRecord(datasetName: string) {
     console.log("Testing - On Clicked new record")
     const page = isDatasetCensus(datasetName) ? '/census' : '/observation';
-    this.router.navigateByUrl(page, { state: { datasetName: datasetName } })
+    this.router.navigateByUrl(page, {state: {datasetName: datasetName}})
   }
 
   public setMapTabSelected(value: boolean) {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController} from "@ionic/angular";
-import {SIGNUP_TERMS_AND_CONDITIONS_HTML } from "../../shared/utils/consts";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {Router} from "@angular/router";
+import { ModalController } from "@ionic/angular";
+import { SIGNUP_TERMS_AND_CONDITIONS_HTML } from "../../shared/utils/consts";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-signup-privacy-policy-page',

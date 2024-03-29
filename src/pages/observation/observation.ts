@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
-import {AlertController, IonNav, NavController, NavParams} from '@ionic/angular';
+import { AlertController, IonNav, NavController, NavParams } from '@ionic/angular';
 //import { AlertController, Events, IonicPage, Navbar, NavController, NavParams } from '@ionic/angular';
 import moment from 'moment/moment';
 
@@ -37,12 +37,12 @@ export class ObservationPage {
   public dataset: Dataset;
   private recordClientId: string;
 
-  @ViewChild('ion-nav', { read: ElementRef }) private navBar: IonNav;
+  @ViewChild('ion-nav', {read: ElementRef}) private navBar: IonNav;
 
   private eventNeedMapHandler = (pos) => {
-      this.showLeavingAlertMessage = false;
-      this.navCtrl.navigateForward('mcp', pos)
-    }
+    this.showLeavingAlertMessage = false;
+    this.navCtrl.navigateForward('mcp', pos)
+  }
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
               private storageService: StorageService,
@@ -172,17 +172,17 @@ export class ObservationPage {
   private updateFromMap() {
     const mapCoords = this.activeRecordService.getLatestCoords();
 
-      if (mapCoords) {
-        const valuesToPatch = {};
-        valuesToPatch['Latitude'] = mapCoords.lat.toFixed(6);
-        valuesToPatch['Longitude'] = mapCoords.lng.toFixed(6);
+    if (mapCoords) {
+      const valuesToPatch = {};
+      valuesToPatch['Latitude'] = mapCoords.lat.toFixed(6);
+      valuesToPatch['Longitude'] = mapCoords.lng.toFixed(6);
 
-        // reset as they are not present in map coords
-        valuesToPatch['Accuracy'] = null;
-        valuesToPatch['Altitude'] = null;
+      // reset as they are not present in map coords
+      valuesToPatch['Accuracy'] = null;
+      valuesToPatch['Altitude'] = null;
 
-        this.recordForm.value = valuesToPatch;
-      }
+      this.recordForm.value = valuesToPatch;
+    }
   }
 
   public save(dontQuit: boolean = false) {
@@ -266,7 +266,7 @@ export class ObservationPage {
               this.storageService.deleteRecord(this.record.client_id!).subscribe(deleted => {
                 if (this.record.photoIds) {
                   from(this.record.photoIds).pipe(
-                      // TODO test
+                    // TODO test
                     mergeMap(photoId => this.storageService.deletePhoto(photoId as string))
                   ).subscribe();
                 }

@@ -11,43 +11,43 @@ import { mergeMap } from 'rxjs/operators';
  */
 
 @Component({
-    selector: 'page-settings',
-    templateUrl: 'settings.html',
-    styleUrls: ['settings.scss']
+  selector: 'page-settings',
+  templateUrl: 'settings.html',
+  styleUrls: ['settings.scss']
 })
 export class SettingsPage {
 
-    public hideUploaded: boolean;
+  public hideUploaded: boolean;
 
-    public ionChangeHideUploaded() {
-        this.saveSetting('hideUploaded', this.hideUploaded);
-    }
+  public ionChangeHideUploaded() {
+    this.saveSetting('hideUploaded', this.hideUploaded);
+  }
 
-    public clickDeleteUploadedRecords() {
-        this.storageService.getAllUploadedRecords().pipe(mergeMap(clientRecord =>
-            this.storageService.deleteRecord(clientRecord.client_id!))).subscribe({
-                complete: () => {
-                    this.alertController.create({
-                        header: 'Settings',
-                        message: 'Uploaded records deleted',
-                        backdropDismiss: true,
-                        buttons: [{text: 'Ok'}]
-                    }).then((alert) => alert.present());
-                }
-            }
-        );
-    }
+  public clickDeleteUploadedRecords() {
+    this.storageService.getAllUploadedRecords().pipe(mergeMap(clientRecord =>
+      this.storageService.deleteRecord(clientRecord.client_id!))).subscribe({
+        complete: () => {
+          this.alertController.create({
+            header: 'Settings',
+            message: 'Uploaded records deleted',
+            backdropDismiss: true,
+            buttons: [{text: 'Ok'}]
+          }).then((alert) => alert.present());
+        }
+      }
+    );
+  }
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private storageService: StorageService,
-        private alertController: AlertController) {
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storageService: StorageService,
+              private alertController: AlertController) {
+  }
 
-    public ionViewWillEnter() {
-        this.storageService.getSetting('hideUploaded').subscribe( setting => this.hideUploaded = JSON.parse(setting));
-    }
+  public ionViewWillEnter() {
+    this.storageService.getSetting('hideUploaded').subscribe(setting => this.hideUploaded = JSON.parse(setting));
+  }
 
-    private saveSetting(name: string, setting: boolean) {
-        this.storageService.putSetting(name, JSON.stringify(setting)).subscribe();
-    }
+  private saveSetting(name: string, setting: boolean) {
+    this.storageService.putSetting(name, JSON.stringify(setting)).subscribe();
+  }
 
 }

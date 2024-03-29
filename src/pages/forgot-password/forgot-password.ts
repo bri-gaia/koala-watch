@@ -13,51 +13,51 @@ import { formatAPIError } from '../../biosys-core/utils/functions';
  */
 
 @Component({
-    selector: 'page-forgot-password',
-    templateUrl: 'forgot-password.html',
+  selector: 'page-forgot-password',
+  templateUrl: 'forgot-password.html',
 })
 export class ForgotPasswordPage {
-    public form: FormGroup;
-    public isPasswordResetRequestSent = false;
+  public form: FormGroup;
+  public isPasswordResetRequestSent = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: APIService,
-                private formBuilder: FormBuilder, private loadingCtrl: LoadingController, private alertController: AlertController) {
-        this.form = formBuilder.group({
-            email: ['', [Validators.required, Validators.email]]
-        });
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: APIService,
+              private formBuilder: FormBuilder, private loadingCtrl: LoadingController, private alertController: AlertController) {
+    this.form = formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
 
-    public async forgotPassword() {
-        const loading = await this.loadingCtrl.create({
-            message: 'Submitting password reset'
-        });
-        await loading.present();
+  public async forgotPassword() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Submitting password reset'
+    });
+    await loading.present();
 
-        const email = this.form.value['email'];
+    const email = this.form.value['email'];
 
-        this.apiService.forgotPassword(email).subscribe(
-            () => this.isPasswordResetRequestSent = true,
-            (apiError: APIError) => {
-                loading.dismiss();
-                const apiResponse = formatAPIError(apiError);
-                let error: string;
+    this.apiService.forgotPassword(email).subscribe(
+      () => this.isPasswordResetRequestSent = true,
+      (apiError: APIError) => {
+        loading.dismiss();
+        const apiResponse = formatAPIError(apiError);
+        let error: string;
 
-                if ('non_field_errors' in apiResponse) {
-                    error = apiResponse['non_field_errors']![0];
-                } else if ('email' in apiResponse) {
-                    error = apiResponse['email'] as string;
-                } else {
-                    error = 'There was a problem contacting the server, try again later';
-                }
+        if ('non_field_errors' in apiResponse) {
+          error = apiResponse['non_field_errors']![0];
+        } else if ('email' in apiResponse) {
+          error = apiResponse['email'] as string;
+        } else {
+          error = 'There was a problem contacting the server, try again later';
+        }
 
-                this.alertController.create({
-                    header: 'Password Reset Problem',
-                    subHeader: error,
-                    buttons: ['Ok']
-                }).then((alert) => alert.present());
-            },
-            () => loading.dismiss()
-        );
-    }
+        this.alertController.create({
+          header: 'Password Reset Problem',
+          subHeader: error,
+          buttons: ['Ok']
+        }).then((alert) => alert.present());
+      },
+      () => loading.dismiss()
+    );
+  }
 
 }

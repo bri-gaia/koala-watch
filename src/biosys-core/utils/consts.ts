@@ -1,7 +1,7 @@
 export let DATASET_TYPE_MAP: any = {
-    generic: 'Generic Record',
-    observation: 'Observation',
-    species_observation: 'Species Observation'
+  generic: 'Generic Record',
+  observation: 'Observation',
+  species_observation: 'Species Observation'
 };
 
 export let ANY_ANGULAR_DATE_FORMAT = 'dd/MM/yyyy';

@@ -5,7 +5,7 @@ import { NavController, NavParams, Platform } from '@ionic/angular';
 import { Marker, GoogleMap, LatLngBounds } from '@capacitor/google-maps'
 
 import { FormNavigationRecord, ActiveRecordService } from '../../providers/activerecordservice/active-record.service';
-import {LatLng} from "@capacitor/google-maps/dist/typings/definitions";
+import { LatLng } from "@capacitor/google-maps/dist/typings/definitions";
 
 
 /**
@@ -25,10 +25,10 @@ export class MapPinPage {
   private startPos: LatLng;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    //private events: Events,
-    private platform: Platform,
-    public activeRecordService: ActiveRecordService) {
+              public navParams: NavParams,
+              //private events: Events,
+              private platform: Platform,
+              public activeRecordService: ActiveRecordService) {
     this.startPos = this.navParams.data as LatLng;
   }
 
@@ -93,7 +93,7 @@ export class MapPinPage {
 
   ionViewWillLeave() {
     this.activeRecordService.comingFromMap = true;
-    if (this.map){
+    if (this.map) {
       this.map.destroy();
 
       this.cleanup();
@@ -116,7 +116,7 @@ export class MapPinPage {
 
   public closeModal() {
     this.activeRecordService.comingFromMap = true;
-      this.navCtrl.pop();
+    this.navCtrl.pop();
   }
 
 }

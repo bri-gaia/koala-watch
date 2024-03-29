@@ -1,14 +1,14 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
 import {
-    APP_NAME,
-    DATASET_NAME_CENSUS,
-    DATASET_NAME_OBSERVATION,
-    DATASET_NAME_TREESURVEY,
-    UPDATE_BUTTON_NAME
+  APP_NAME,
+  DATASET_NAME_CENSUS,
+  DATASET_NAME_OBSERVATION,
+  DATASET_NAME_TREESURVEY,
+  UPDATE_BUTTON_NAME
 } from '../../shared/utils/consts';
-import {isDatasetCensus} from "../../shared/utils/functions";
-import {EventService} from "../../shared/services/event.service";
+import { isDatasetCensus } from "../../shared/utils/functions";
+import { EventService } from "../../shared/services/event.service";
 
 /**
  * Generated class for the HelpPage page.
@@ -18,41 +18,41 @@ import {EventService} from "../../shared/services/event.service";
  */
 
 @Component({
-    selector: 'page-help',
-    templateUrl: 'help.html',
-    styleUrls: ['help.scss']
+  selector: 'page-help',
+  templateUrl: 'help.html',
+  styleUrls: ['help.scss']
 })
 export class HelpPage {
 
-    public DATASETNAME_TREESURVEY = DATASET_NAME_TREESURVEY;
-    public DATASETNAME_CENSUS = DATASET_NAME_CENSUS;
-    public DATASETNAME_OBSERVATION = DATASET_NAME_OBSERVATION;
+  public DATASETNAME_TREESURVEY = DATASET_NAME_TREESURVEY;
+  public DATASETNAME_CENSUS = DATASET_NAME_CENSUS;
+  public DATASETNAME_OBSERVATION = DATASET_NAME_OBSERVATION;
 
-    public APP_NAME = APP_NAME;
-    public UPDATE_BUTTON_NAME = UPDATE_BUTTON_NAME;
+  public APP_NAME = APP_NAME;
+  public UPDATE_BUTTON_NAME = UPDATE_BUTTON_NAME;
 
-    @Input()
-    public parentId: string;
+  @Input()
+  public parentId: string;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private events: EventService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private events: EventService) {
+  }
+
+  public onClickedNewRecord(datasetName: string) {
+    const params: { datasetName: string; parentId: string | null } = {
+      datasetName: datasetName,
+      parentId: null
+    };
+
+    if (this.parentId) {
+      params['parentId'] = this.parentId;
     }
 
-    public onClickedNewRecord(datasetName: string) {
-        const params: { datasetName: string; parentId: string | null} = {
-            datasetName: datasetName,
-            parentId: null
-        };
+    let page = isDatasetCensus(datasetName) ? '/census' : '/observation';
 
-        if (this.parentId) {
-            params['parentId'] = this.parentId;
-        }
+    this.navCtrl.navigateForward(page, {state: params})
+  }
 
-        let page = isDatasetCensus(datasetName) ? '/census' : '/observation';
-
-        this.navCtrl.navigateForward(page, { state: params })
-    }
-
-    public uploadClicked() {
-        this.events.publishEvent('upload-clicked');
-    }
+  public uploadClicked() {
+    this.events.publishEvent('upload-clicked');
+  }
 }
