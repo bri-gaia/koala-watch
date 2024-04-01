@@ -78,7 +78,10 @@ export class ObservationPage {
     }
     this.photoGallery.RecordId = this.recordClientId;
 
-    this.storageService.getDataset(this.navParams.get('datasetName')).subscribe((dataset: Dataset) => {
+    // TODO dataset name was previously retrieved from `this.navParams.get('datasetName')`
+    // We either need to revert this change and set this value, or find where else we need to specifically set
+    // the dataset name.
+    this.storageService.getDataset(DATASET_NAME_OBSERVATION).subscribe((dataset: Dataset) => {
       if (dataset) {
         this.dataset = dataset;
 
