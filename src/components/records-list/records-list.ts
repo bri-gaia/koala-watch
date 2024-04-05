@@ -137,8 +137,7 @@ export class RecordsListComponent {
   }) {
     console.log("Testing - Called navPush")
     // this.enteringRecord.emit();
-    this.router.navigateByUrl(page, {state: params});
-    //this.navCtrl.navigateForward(page, { state: params })
+    this.navCtrl.navigateForward(page, { state: params })
   }
 
   public itemTapped(record: ClientRecord) {

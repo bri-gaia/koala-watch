@@ -16,6 +16,7 @@ import { PhotoGalleryComponent } from '../../components/photo-gallery/photo-gall
 import { DATASET_NAME_TREESURVEY, DATASET_NAME_CENSUS } from '../../shared/utils/consts';
 
 import { FormNavigationRecord, ActiveRecordService } from '../../providers/activerecordservice/active-record.service';
+import { Router } from "@angular/router";
 
 /**
  * Generated class for the CensusPage page.
@@ -34,6 +35,7 @@ export class CensusPage {
   public readonly = false;
 
   public segmentContent = 'form';
+  private readonly datasetName: string;
   public dataset: Dataset;
 
   private showLeavingAlertMessage = true;
@@ -54,7 +56,12 @@ export class CensusPage {
               public navParams: NavParams,
               private storageService: StorageService,
               private alertController: AlertController,
-              public activeRecordService: ActiveRecordService) {
+              public activeRecordService: ActiveRecordService,
+              public router: Router) {
+    const params = this.router.getCurrentNavigation()?.extras.state;
+    if (params) {
+      this.datasetName = params['datasetName'];
+    }
   }
 
   public onClickedNewRecord(datasetName: string) {
@@ -87,9 +94,7 @@ export class CensusPage {
     this.photoGallery.RecordId = this.recordClientId;
 
     if (!this.dataset) {
-      // const datasetName = this.navParams.get('datasetName');
-
-      this.storageService.getDataset(DATASET_NAME_CENSUS).subscribe((dataset: Dataset) => {
+      this.storageService.getDataset(this.datasetName).subscribe((dataset: Dataset) => {
         this.dataset = dataset;
 
         if (this.isNewRecord) {
@@ -174,7 +179,7 @@ export class CensusPage {
       this.activeRecordService.setActiveFormNavigationRecord({
         page: 'CensusPage',
         params: {
-          datasetName: this.navParams.get('datasetName'),
+          datasetName: this.datasetName,
           recordClientId: this.recordClientId,
           readonly: false
         }
@@ -187,7 +192,7 @@ export class CensusPage {
       valid: this.recordForm.valid && this.observationRecords.reduce((acc, cur) => cur.valid && acc, true),
       client_id: this.recordClientId,
       dataset: this.dataset.id,
-      datasetName: this.navParams.get('datasetName'),
+      datasetName: this.datasetName,
       datetime: this.recordForm.dateFieldKey ? formValues[this.recordForm.dateFieldKey] : moment().format(),
       data: formValues,
       count: this.observationRecords.length,

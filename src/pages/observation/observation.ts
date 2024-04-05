@@ -15,6 +15,7 @@ import { UUID } from 'angular2-uuid';
 
 import { FormNavigationRecord, ActiveRecordService } from '../../providers/activerecordservice/active-record.service';
 import { DATASET_NAME_OBSERVATION } from '../../shared/utils/consts';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'page-observation',
@@ -34,6 +35,7 @@ export class ObservationPage {
 
   private showLeavingAlertMessage = true;
   private record: ClientRecord;
+  private readonly datasetName: string;
   public dataset: Dataset;
   private recordClientId: string;
 
@@ -48,7 +50,12 @@ export class ObservationPage {
               private storageService: StorageService,
               private alertController: AlertController,
               //private events: Events,
-              public activeRecordService: ActiveRecordService) {
+              public activeRecordService: ActiveRecordService,
+              public router: Router) {
+    const params = this.router.getCurrentNavigation()?.extras.state;
+    if (params) {
+      this.datasetName = params['datasetName'];
+    }
   }
 
   public onClickedNewPhoto(useCamera: boolean) {
@@ -78,10 +85,7 @@ export class ObservationPage {
     }
     this.photoGallery.RecordId = this.recordClientId;
 
-    // TODO dataset name was previously retrieved from `this.navParams.get('datasetName')`
-    // We either need to revert this change and set this value, or find where else we need to specifically set
-    // the dataset name.
-    this.storageService.getDataset(DATASET_NAME_OBSERVATION).subscribe((dataset: Dataset) => {
+    this.storageService.getDataset(this.datasetName).subscribe((dataset: Dataset) => {
       if (dataset) {
         this.dataset = dataset;
 
@@ -225,7 +229,7 @@ export class ObservationPage {
       this.activeRecordService.setActiveFormNavigationRecord({
         page: 'ObservationPage',
         params: {
-          datasetName: this.navParams.get('datasetName'),
+          datasetName: this.datasetName,
           recordClientId: this.recordClientId,
           parentId: this.parentId,
           readonly: false
@@ -238,7 +242,7 @@ export class ObservationPage {
       valid: this.recordForm.valid,
       client_id: this.recordClientId,
       dataset: this.dataset.id,
-      datasetName: this.navParams.get('datasetName'),
+      datasetName: this.datasetName,
       parentId: this.parentId,
       datetime: this.recordForm.dateFieldKey ? formValues[this.recordForm.dateFieldKey] : moment().format(),
       data: formValues,
