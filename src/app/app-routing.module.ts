@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomePageModule } from "../pages/home/home.module";
 import { HomePage } from "../pages/home/home";
+import { CensusPageModule } from "../pages/census/census.module";
 
 export const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: "full"},
   {path: 'about', loadChildren: () => import('../pages/about/about.module').then(m => m.AboutPageModule)},
-  {path: 'census', loadChildren: () => import('../pages/census/census.module').then(m => m.CensusPageModule)},
+  // {path: 'census', loadChildren: () => import('../pages/census/census.module').then(m => m.CensusPageModule)},
+  {path: 'census', component:CensusPageModule},
   {
     path: 'forgotpassword',
     loadChildren: () => import('../pages/forgot-password/forgot-password.module').then(m => m.ForgotPasswordPageModule)

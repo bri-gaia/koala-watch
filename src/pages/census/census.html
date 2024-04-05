@@ -11,7 +11,7 @@
                 <ion-title>{{ dataset?.name }}</ion-title>
             </ion-row>
             <ion-row justify-content-end>
-                <ion-buttons *ngIf="!readonly" end>
+                <ion-buttons end>
                     <ion-button icon-end solid color="primary" (click)="delete()">
                         Delete&nbsp;
                         <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>

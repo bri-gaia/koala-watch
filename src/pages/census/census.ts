@@ -13,7 +13,7 @@ import { StorageService } from '../../shared/services/storage.service';
 import { RecordFormComponent } from '../../components/record-form/record-form';
 import { PhotoGalleryComponent } from '../../components/photo-gallery/photo-gallery';
 
-import { DATASET_NAME_TREESURVEY } from '../../shared/utils/consts';
+import { DATASET_NAME_TREESURVEY, DATASET_NAME_CENSUS } from '../../shared/utils/consts';
 
 import { FormNavigationRecord, ActiveRecordService } from '../../providers/activerecordservice/active-record.service';
 
@@ -87,9 +87,9 @@ export class CensusPage {
     this.photoGallery.RecordId = this.recordClientId;
 
     if (!this.dataset) {
-      const datasetName = this.navParams.get('datasetName');
+      // const datasetName = this.navParams.get('datasetName');
 
-      this.storageService.getDataset(datasetName).subscribe((dataset: Dataset) => {
+      this.storageService.getDataset(DATASET_NAME_CENSUS).subscribe((dataset: Dataset) => {
         this.dataset = dataset;
 
         if (this.isNewRecord) {

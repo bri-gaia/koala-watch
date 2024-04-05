@@ -4,8 +4,8 @@
             <ion-row>
                 <ion-title>{{ dataset?.name }}</ion-title>
             </ion-row>
-            <ion-row justify-content-end>
-                <ion-buttons *ngIf="!readonly" end>
+            <ion-row justify-content-end style="margin-top-top: 1.5rem;">
+                <ion-buttons end style="padding-top: 1rem">
                     <ion-button icon-end solid color="primary" (click)="delete()">
                         Delete&nbsp;
                         <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
@@ -21,7 +21,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-segment [(ngModel)]="showForm" color="primary">
+    <ion-segment style="margin-top: 1.5rem" [(ngModel)]="showForm" color="primary">
         <ion-segment-button [value]="true">
             Form
         </ion-segment-button>
@@ -30,7 +30,7 @@
         </ion-segment-button>
     </ion-segment>
 
-    <div>
+    <div style="margin-top: 1.5rem">
         <div [hidden]="!showForm">
             <record-form [dataset]="dataset"
                          [initialiseDefaultValues]="isNewRecord"
