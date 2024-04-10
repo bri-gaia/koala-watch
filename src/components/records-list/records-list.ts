@@ -59,7 +59,6 @@ export class RecordsListComponent {
     private storage: StorageService,
     public activeRecordService: ActiveRecordService,
     private events: EventService) {
-    console.log("Testing - Called Records-List constructor")
 
     this.baseNavController = (this.navParams.data.hasOwnProperty('navCtrl') ? this.navParams.get('navCtrl') : undefined);
 
@@ -71,7 +70,6 @@ export class RecordsListComponent {
   }
 
   public getStatusColor(record: ClientRecord) {
-    console.log("Testing - Getting StatusColor")
     if (record.id) {
       return RECORD_UPLOADED;
     }
@@ -79,7 +77,6 @@ export class RecordsListComponent {
   }
 
   public getAltText(record: ClientRecord): string {
-    console.log("Testing - Getting Alt Text")
     let rv = '';
     switch (record.datasetName) {
       case DATASET_NAME_OBSERVATION:
@@ -102,7 +99,6 @@ export class RecordsListComponent {
 
 
   public getDatasetIcon(record: ClientRecord): string {
-    console.log("Testing - Getting DatasetIcon")
     switch (record.datasetName) {
       case DATASET_NAME_OBSERVATION:
         return 'assets/imgs/eye.png';
@@ -116,7 +112,6 @@ export class RecordsListComponent {
   }
 
   public getCountIcon(record: ClientRecord): string {
-    console.log("Testing - Called getCountIcon")
     switch (record.datasetName) {
       case DATASET_NAME_OBSERVATION:
         return 'assets/imgs/koala.png';
@@ -135,13 +130,11 @@ export class RecordsListComponent {
     parentId?: string | null | undefined;
     readonly?: boolean;
   }) {
-    console.log("Testing - Called navPush")
     // this.enteringRecord.emit();
     this.navCtrl.navigateForward(page, { state: params })
   }
 
   public itemTapped(record: ClientRecord) {
-    console.log("Testing - Called itemTapped")
 
     const page = isDatasetCensus(record.datasetName) ? '/census' : '/observation';
     const params = {
@@ -159,7 +152,6 @@ export class RecordsListComponent {
   }
 
   public onClickedNewRecord(datasetName: string) {
-    console.log("Testing - Called onClickedNewRecord")
     let page;
     const params: { datasetName: string; parentId: string | null } = {
       datasetName: datasetName,
@@ -177,7 +169,6 @@ export class RecordsListComponent {
   }
 
   public uploadClicked() {
-    console.log("Testing - Upload Clicked")
     this.events.publishEvent('upload-clicked');
   }
 }

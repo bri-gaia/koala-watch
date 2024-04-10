@@ -48,7 +48,6 @@ export class LoginPage {
     private modalController: ModalController,
     private authenticatedService: AuthenticatedService) {
 
-    console.log("Testing - Login Constructor Called")
     this.form = this.formBuilder.group({
       'username': ['', Validators.required],
       'password': ['', Validators.required]
@@ -93,7 +92,6 @@ export class LoginPage {
     const password = this.form.value['password'];
     this.authService.login(username, password).subscribe({
       next: (x) => {
-        console.log(x)
         const params = {
           project__name: PROJECT_NAME
         };
@@ -114,7 +112,6 @@ export class LoginPage {
           console.log(error)
         });
 
-        console.log('Done', 'done')
         loading?.dismiss()
         // this.navCtrl.navigateRoot("/").then(x => {
         //   console.log("nav", x)

@@ -32,13 +32,10 @@ export class RecordsMapComponent {
   constructor(private navParams: NavParams,
               private events: EventService,
               private platform: Platform) {
-    console.log("Testing - Records-Map Constructor called")
   }
 
   ionViewDidEnter() {
-    console.log("Testing - Records Map ionViewDidEnter called")
     this.platform.ready().then(() => {
-      console.log("Testing - Running load map")
       this.loadMap();
     });
   }
@@ -59,9 +56,7 @@ export class RecordsMapComponent {
   }
 
   loadMap(): void {
-    console.log("Testing - Loading map")
     if (this.mapRef?.nativeElement != null) {
-      console.log("Testing - Found element")
       this.map = new google.maps.Map(this.mapRef.nativeElement, {
         center: {lat: -25, lng: 132},
         zoom: 3.5
@@ -69,7 +64,6 @@ export class RecordsMapComponent {
     }
 
     if (this.navParams.data.hasOwnProperty('data')) {
-      console.log("Testing - Found data")
       this.records = this.navParams.get('data');
     }
 
@@ -78,7 +72,6 @@ export class RecordsMapComponent {
   }
 
   public ionViewWillEnter() {
-    console.log("Testing - Records-map ionViewWillEnter called")
     timer(500).subscribe(() => this.loadMarkers());
   }
 
@@ -87,9 +80,7 @@ export class RecordsMapComponent {
   }
 
   private loadMarkers() {
-    console.log("Testing - Loading Markers for records-map")
     if (this.map) {
-      console.log("Testing - Found map")
       this.removeMarkers()
       if (this._records && this._records.length) {
         for (const record of this._records) {

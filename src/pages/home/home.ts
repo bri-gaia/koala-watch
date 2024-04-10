@@ -48,18 +48,15 @@ export class HomePage implements OnInit {
    * Lifecycle method called by system
    */
   ionViewWillEnter() {
-    console.log("Testing - Home ionViewWillEnter ran")
     this.loadRecords();
     this.event.publishEvent('home-willenter');
     this.event.getObservableForEvent('upload-clicked').subscribe(() => this.clickedUpload());
   }
 
   async clickedUpload() {
-    console.log("Testing - Clicked upload")
     if (this.records.length <= 0) {
       // Disable this button if there are no records to prevent an issue
       // where the spinner remains indefinitely.
-      console.log("Testing - Returning as no records")
       return;
     }
 
@@ -100,7 +97,6 @@ export class HomePage implements OnInit {
   }
 
   public onClickedNewRecord(datasetName: string) {
-    console.log("Testing - On Clicked new record")
     const page = isDatasetCensus(datasetName) ? '/census' : '/observation';
     this.router.navigateByUrl(page, {state: {datasetName: datasetName}})
   }
@@ -110,26 +106,19 @@ export class HomePage implements OnInit {
   }
 
   private loadRecords() {
-    console.log("Testing - Called loadRecords")
     while (this.records.length) {
 
-      console.log("Testing - popping records")
       this.records.pop();
     }
     this.storageService.getSetting('hideUploaded').subscribe(hideUploaded => {
-      console.log("Testing - got hideUploaded")
       if (JSON.parse(hideUploaded)) {
-        console.log("Testing - Getting parent records with pipe")
         this.storageService.getParentRecords().pipe(filter(record => !(!!record.id))).subscribe(
           (record: ClientRecord) => {
-            console.log("Testing - Got client record")
             this.records.push(record)
           });
       } else {
-        console.log("Testing - Getting parent records without pipe")
         this.storageService.getParentRecords().subscribe(
           (record: ClientRecord) => {
-            console.log("Testing - Got client record")
             this.records.push(record)
           });
       }
@@ -138,8 +127,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
-
-    console.log("Testing - ngOnInit for Home called")
 
     setTimeout(() => {
       // These are needed to fix the app when used with a screenreader. Otherwise,

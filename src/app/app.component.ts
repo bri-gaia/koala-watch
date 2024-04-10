@@ -58,7 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
   async ngOnInit() {
 
     this.router.events.subscribe((event) => {
-      console.log("Testing - Printing Event: " + event)
     })
 
     // Make sure we create the database storage before accessing
