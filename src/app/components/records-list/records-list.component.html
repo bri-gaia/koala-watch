@@ -1,0 +1,34 @@
+<ng-container *ngIf="showLegend && _records.length">
+  <ion-grid>
+    <ion-row>
+      <ion-col>Complete</ion-col>
+      <ion-col>Incomplete</ion-col>
+      <ion-col>Uploaded</ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-container>
+
+<ng-container *ngIf="!_records.length">
+  <ng-content></ng-content>
+</ng-container>
+
+<ng-container *ngIf="_records.length">
+  <ion-list>
+    <ion-item *ngFor="let record of _records"
+              [style.background-color]="record.statusColor"
+              (click)="doRecordClicked(record.data)">
+      <ion-img slot="start"
+               [alt]="record.altText"
+               [src]="datasetIcon" aria-hidden="true"/>
+      <ion-label>
+        {{ record.data.datetime | date: 'dd/MM/yyyy HH:mm' }}
+      </ion-label>
+      <ion-img slot="end"
+               [src]="countIcon"/>
+      <span slot="end">{{ record.data.count || 0 }}</span>
+      <ion-img slot="end" class="data-row" src="assets/imgs/camera.png"/>
+      <span slot="end">{{ record.data.photoIds.length || 0 }}</span>
+    </ion-item>
+  </ion-list>
+</ng-container>
+

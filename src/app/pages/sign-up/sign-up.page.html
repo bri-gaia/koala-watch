@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Signup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-img style="width: 100%" src="../../assets/imgs/koalawatch_heading.png"/>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-padding-top">
+        To use {{ appName }}, please fill out the details below to sign up
+        for an account. Please note that all fields are mandatory.
+      </ion-col>
+    </ion-row>
+
+    <form [formGroup]="form" *ngIf="errors.errors$ | async as messages">
+      <ion-grid>
+        <!-- Username -->
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input color="primary"
+                         label-placement="floating"
+                         label="Username (visible to other users)"
+                         formControlName="name_user"
+                         [errorText]="messages['name_user']"
+                         autocapitalize="false"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <!-- Email Address -->
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input color="primary"
+                         label-placement="floating"
+                         label="Email Address"
+                         [errorText]="messages['email']"
+                         formControlName="email"
+                         type="email"
+                         autocapitalize=off></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <!-- Given Names -->
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input color="primary"
+                         label-placement="floating"
+                         label="Given Names"
+                         [errorText]="messages['name_given']"
+                         formControlName="name_given"
+                         autocapitalize=off></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <!-- Last Name -->
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input color="primary"
+                         label-placement="floating"
+                         label="Last Name"
+                         [errorText]="messages['name_last']"
+                         formControlName="name_last"
+                         autocapitalize=off></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <!-- Password -->
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input color="primary"
+                         label-placement="floating"
+                         label="Password"
+                         [errorText]="messages['password']"
+                         formControlName="password" type="password"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <!-- Repeat Password -->
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input color="primary"
+                         label-placement="floating"
+                         label="Repeat Password"
+                         [errorText]="messages['password_again']"
+                         (paste)="$event.preventDefault()"
+                         formControlName="password_again" type="password"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <!-- Signup button -->
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" type="submit" (click)="doSignup()"
+                        [disabled]="!form.valid">
+              Sign Up
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <!-- Back button -->
+        <!--
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" type="button" (click)="goBack()">Go Back</ion-button>
+          </ion-col>
+        </ion-row>
+        -->
+      </ion-grid>
+    </form>
+  </ion-grid>
+</ion-content>

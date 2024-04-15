@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card *ngIf="settings$ | async as settings">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="ion-justify-content-between ion-align-items-center ion-margin-bottom">
+          <ion-label>Hide uploaded records</ion-label>
+          <ion-toggle [checked]="settings['hideUploaded']" (ionChange)="update('hideUploaded', $event.detail.checked)" />
+        </ion-row>
+        <ion-row class="ion-justify-content-between ion-align-items-center">
+          <ion-label>Delete uploaded records</ion-label>
+          <ion-button size="small" (click)="doClearUploaded()">Delete</ion-button>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

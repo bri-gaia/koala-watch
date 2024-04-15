@@ -1,106 +1,134 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AlertController, Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { Subscription } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-import { from } from 'rxjs/observable/from';
-
-import { AuthService } from '../biosys-core/services/auth.service';
-import { APIService } from '../biosys-core/services/api.service';
-import { StorageService } from '../shared/services/storage.service';
-import { Dataset, User } from '../biosys-core/interfaces/api.interfaces';
-
-import { PROJECT_NAME } from '../shared/utils/consts';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+import {
+  AlertController,
+  IonApp,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonMenuToggle,
+  IonNote,
+  IonRouterOutlet,
+  IonSplitPane,
+  IonToolbar
+} from '@ionic/angular/standalone';
+import {addIcons} from 'ionicons';
+import {
+  archiveOutline,
+  archiveSharp,
+  bookmarkOutline,
+  bookmarkSharp,
+  heartOutline,
+  heartSharp,
+  mailOutline,
+  mailSharp,
+  paperPlaneOutline,
+  paperPlaneSharp,
+  trashOutline,
+  trashSharp,
+  warningOutline,
+  warningSharp
+} from 'ionicons/icons';
+import {AuthenticationService} from "./services/authentication/authentication.service";
+import {Observable} from "rxjs";
+import {HttpClientModule} from "@angular/common/http";
+import {User} from "./models/user";
 
 @Component({
-    templateUrl: 'app.html'
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    CommonModule,
+    IonApp,
+    IonSplitPane,
+    IonMenu,
+    IonContent,
+    IonList,
+    IonListHeader,
+    IonNote,
+    IonMenuToggle,
+    IonItem,
+    IonIcon,
+    IonLabel,
+    IonRouterOutlet,
+    IonHeader,
+    IonToolbar,
+    HttpClientModule,
+  ],
 })
-export class AppComponent implements OnInit, OnDestroy {
-    @ViewChild(Nav) nav: Nav;
+export class AppComponent {
+  public appPages = [
+    {title: 'Records', url: '/records', icon: 'mail'},
+    {title: 'Settings', url: '/settings', icon: 'paper-plane'},
+    {title: 'About', url: '/about', icon: 'heart'},
+    {title: 'Help', url: '/help', icon: 'archive'},
+    {title: 'Privacy Policy', url: '/privacy-policy', icon: 'trash'},
+  ];
 
-    private resumeSubscription: Subscription;
+  /* TODEL
+  public menuItems = [
+    {title: 'Records', page: '/home', icon: 'tachometer-alt'}, /// Might be wrong page
+    {title: 'Settings', page: '/settings', icon: 'cog'},
+    {title: 'About', page: '/about', icon: 'info-circle'},
+    {title: 'Help', page: '/help', icon: 'question-circle'},
+    {title: 'Privacy Policy', page: '/privacypolicy', icon: 'lock'},
+    {title: 'Log out', icon: 'sign-out-alt'},
+  ];
+   */
 
-    public menuItems: object[] = [
-        {title: 'Records', page: 'HomePage', icon: 'tachometer-alt'},
-        {title: 'Settings', page: 'SettingsPage', icon: 'cog'},
-        {title: 'About', page: 'AboutPage', icon: 'info-circle'},
-        {title: 'Help', page: 'HelpPage', icon: 'question-circle'},
-        {title: 'Privacy Policy', page: 'PrivacyPolicyPage', icon: 'lock'},
-        {title: 'Log out', icon: 'sign-out-alt'},
-    ];
+  user$: Observable<User | null>;
 
-    constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-                private alertController: AlertController, private apiService: APIService,
-                private authService: AuthService, private storageService: StorageService) {
-    }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private alertController: AlertController,
+    private router: Router,
+  ) {
+    this.user$ = this.authenticationService.user$;
+    addIcons({
+      mailOutline,
+      mailSharp,
+      paperPlaneOutline,
+      paperPlaneSharp,
+      heartOutline,
+      heartSharp,
+      archiveOutline,
+      archiveSharp,
+      trashOutline,
+      trashSharp,
+      warningOutline,
+      warningSharp,
+      bookmarkOutline,
+      bookmarkSharp
+    });
+  }
 
-    ngOnInit() {
-        this.platform.ready().then(() => {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            this.statusBar.styleDefault();
-            this.splashScreen.hide();
-
-            if (!this.authService.isLoggedIn()) {
-                this.nav.setRoot('LoginPage');
-            } else {
-                this.reloadMetadata();
-                this.nav.setRoot('HomePage');
-            }
-        });
-
-        this.resumeSubscription = this.platform.resume.subscribe(() => {
-            if (this.authService.isLoggedIn()) {
-                this.reloadMetadata();
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        this.resumeSubscription.unsubscribe();
-    }
-
-    public openPage(menuItem) {
-        // Reset the content nav to have just this page
-        // we wouldn't want the back button to show in this scenario
-        if (menuItem.title === 'Log out') {
-            this.askLogout();
-        } else {
-            this.nav.setRoot(menuItem.page);
-        }
-    }
-
-    private reloadMetadata() {
-        this.apiService.getDatasets({project__name: PROJECT_NAME}).pipe(
-            mergeMap((datasets: Dataset[]) => from(datasets).pipe(
-                mergeMap((dataset: Dataset) => this.storageService.putDataset(dataset))
-            ))
-        ).subscribe();
-
-        this.apiService.getUsers({project__name: PROJECT_NAME}).pipe(
-            mergeMap((users: User[]) => this.storageService.putTeamMembers(users))
-        ).subscribe();
-    }
-
-    private askLogout() {
-        this.alertController.create({
-            title: 'Are you sure?',
-            message: 'Are you sure you wish to log out?',
-            enableBackdropDismiss: true,
-            buttons: [
-                {
-                    text: 'Log Out',
-                    handler: () => {
-                        this.authService.logout();
-                        this.nav.setRoot('LoginPage');
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    role: 'cancel'
-                }]
-        }).present();
-    }
+  askLogout() {
+    this.alertController.create({
+      header: 'Are you sure?',
+      message: 'Are you sure you wish to log out?',
+      backdropDismiss: true,
+      buttons: [
+        {
+          text: 'Log Out',
+          handler: () => {
+            this.authenticationService.logout();
+            return this.router.navigateByUrl('/login');
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }]
+    }).then(alert => alert.present())
+  }
 }
