@@ -6,7 +6,6 @@ import {
   IonApp,
   IonContent,
   IonHeader,
-  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -18,27 +17,13 @@ import {
   IonSplitPane,
   IonToolbar
 } from '@ionic/angular/standalone';
-import {addIcons} from 'ionicons';
-import {
-  archiveOutline,
-  archiveSharp,
-  bookmarkOutline,
-  bookmarkSharp,
-  heartOutline,
-  heartSharp,
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp
-} from 'ionicons/icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {AuthenticationService} from "./services/authentication/authentication.service";
 import {Observable} from "rxjs";
 import {HttpClientModule} from "@angular/common/http";
 import {User} from "./models/user";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { faCog, faInfoCircle, faLock, faQuestionCircle, faSignOutAlt, faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-root',
@@ -58,21 +43,22 @@ import {User} from "./models/user";
     IonNote,
     IonMenuToggle,
     IonItem,
-    IonIcon,
     IonLabel,
     IonRouterOutlet,
     IonHeader,
     IonToolbar,
     HttpClientModule,
+    FontAwesomeModule,
   ],
 })
 export class AppComponent {
-  public appPages = [
-    {title: 'Records', url: '/records', icon: 'mail'},
-    {title: 'Settings', url: '/settings', icon: 'paper-plane'},
-    {title: 'About', url: '/about', icon: 'heart'},
-    {title: 'Help', url: '/help', icon: 'archive'},
-    {title: 'Privacy Policy', url: '/privacy-policy', icon: 'trash'},
+  faSignOutAlt = faSignOutAlt;
+  public appPages: {title:string, url:string, icon: IconProp}[] = [
+    {title: 'Records', url: '/records', icon: faTachometerAlt},
+    {title: 'Settings', url: '/settings', icon: faCog},
+    {title: 'About', url: '/about', icon: faInfoCircle},
+    {title: 'Help', url: '/help', icon: faQuestionCircle},
+    {title: 'Privacy Policy', url: '/privacy-policy', icon: faLock},
   ];
 
   /* TODEL
@@ -94,22 +80,6 @@ export class AppComponent {
     private router: Router,
   ) {
     this.user$ = this.authenticationService.user$;
-    addIcons({
-      mailOutline,
-      mailSharp,
-      paperPlaneOutline,
-      paperPlaneSharp,
-      heartOutline,
-      heartSharp,
-      archiveOutline,
-      archiveSharp,
-      trashOutline,
-      trashSharp,
-      warningOutline,
-      warningSharp,
-      bookmarkOutline,
-      bookmarkSharp
-    });
   }
 
   askLogout() {
