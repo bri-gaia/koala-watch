@@ -1,5 +1,11 @@
-<ion-card>
+<ion-card *ngIf="photo">
+  <ion-card-header>
+    <ion-button (click)="doDelete()">
+      Delete
+    </ion-button>
+  </ion-card-header>
+
   <ion-card-content>
-    <img src="" />
+    <ion-img [src]="photo.base64"/>
   </ion-card-content>
 </ion-card>

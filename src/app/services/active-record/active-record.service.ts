@@ -1,34 +1,91 @@
 import {Injectable} from '@angular/core';
+import {ClientPhoto} from "../../models/client-photo";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActiveRecordService {
 
-  values: any = {};
-  status: string = "";
+  private _values = new BehaviorSubject<any>({});
+  public values$ = this._values.asObservable();
+
+  public _status = new BehaviorSubject<string>("");
+  public status$ = this._status.asObservable();
+
+  private _photos = new BehaviorSubject<ClientPhoto[]>([]);
+  public photos$ = this._photos.asObservable();
+
+  private _currentPhoto = new BehaviorSubject<number>(0);
+  public currentPhoto$ = this._currentPhoto.asObservable();
 
   constructor() {
   }
 
   clear() {
-    this.values = {};
-    this.status = "";
+    this._values.next({});
+    this._photos.next([]);
+    this._status.next("");
+    this._currentPhoto.next(0);
   }
 
   getValues() {
-    return this.values;
+    return this._values.value;
   }
 
   setValues(values: any) {
-    this.values = values;
+    this._values.next(values);
   }
 
   getStatus() {
-    return this.status;
+    return this._status.value;
   }
 
   setStatus(status: string) {
-    this.status = status;
+    this._status.next(status);
   }
+
+  getPhotos(): ClientPhoto[] {
+    return this._photos.value;
+  }
+
+  setPhotos(photos: ClientPhoto[]) {
+    this._photos.next(photos);
+  }
+
+  /**
+   * Adds a photo to the active record, returns index.
+   *
+   * @param photo
+   */
+  addPhoto(photo: ClientPhoto) {
+    const photos = this._photos.value;
+    photos.push(photo);
+    this._photos.next(photos);
+    return photos.length - 1;
+  }
+
+  deletePhoto(index: number) {
+    const photos = this._photos.value;
+    photos.splice(index, 1);
+    this._photos.next(photos);
+    if (index >= photos.length) {
+      this._currentPhoto.next(photos.length - 1);
+    }
+  }
+
+  getCurrentPhoto(): number {
+    return this._currentPhoto.value;
+  }
+
+  setCurrentPhoto(index: number) {
+    this._currentPhoto.next(index);
+  }
+
+  save() {
+    // TODO: Stores the active record into storage (which should list all the records of the user)
+    // Once it is uploaded then it should display on the API.
+
+  }
+
 }

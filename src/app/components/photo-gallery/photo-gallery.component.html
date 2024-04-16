@@ -1,0 +1,13 @@
+<div *ngIf="gallery$ | async as gallery">
+  <app-photo [photo]="gallery.photos[gallery.current]" [index]="gallery.current"/>
+
+  <ion-buttons>
+    <ion-button *ngIf="previous" (click)="doChangePhoto(gallery.current - 1)">
+      Previous
+    </ion-button>
+
+    <ion-button *ngIf="next" (click)="doChangePhoto(gallery.current + 1)">
+      Next
+    </ion-button>
+  </ion-buttons>
+</div>

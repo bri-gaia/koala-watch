@@ -11,7 +11,9 @@ import {AuthenticationInterceptor} from "./app/services/authentication/authentic
 import {APP_NAME, PROJECT_NAME} from "./app/tokens/app";
 import {API_URL} from "./app/tokens/api";
 import {IonicStorageModule} from "@ionic/storage-angular";
+import {defineCustomElements} from "@ionic/pwa-elements/loader";
 
+defineCustomElements(window);
 if (environment.production) {
   enableProdMode();
 }

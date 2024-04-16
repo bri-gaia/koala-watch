@@ -6,6 +6,7 @@ import {User} from "../../models/user";
 import {API_URL} from "../../tokens/api";
 import {PROJECT_NAME} from "../../tokens/app";
 import {Dataset} from "../../models/dataset";
+import {ClientRecord} from "../../models/client-record";
 
 
 /**
@@ -490,20 +491,6 @@ export class APIService {
       );
   }
 
-  public getRecordsByDatasetId(id: number, params = {}): Observable<any> {
-    params['dataset__id'] = id;
-    return this.getRecords(params);
-  }
-
-  public getRecords(params = {}): Observable<Record[]> {
-    return this.httpClient.get<Record[]>(this.buildAbsoluteUrl('records'), {
-      params: params
-    })
-      .pipe(
-        catchError((err, caught) => this.handleError(err, caught))
-      );
-  }
-
   public getRecordById(id: number): Observable<Record> {
     return this.httpClient.get<Record>(this.buildAbsoluteUrl('records/' + id))
       .pipe(
@@ -778,5 +765,18 @@ export class APIService {
       project__name: this.projectName,
     }) as Observable<Dataset[]>;
   }
+
+  public getRecordsByDatasetId(id: number, params: any = {}): Observable<ClientRecord[]> {
+    params['dataset__id'] = id;
+    return this.getRecords(params);
+  }
+
+  public getRecords(params: any = {}): Observable<ClientRecord[]> {
+    return this.getRequest(
+      this.buildAbsoluteUrl('records'), {
+        params: params
+      }) as Observable<ClientRecord[]>;
+  }
+
 
 }
