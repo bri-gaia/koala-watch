@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {AuthenticationService} from "../authentication/authentication.service";
 import {APIService} from "../api/api.service";
 import {PROJECT_NAME} from "../../tokens/app";
-import {distinctUntilChanged, firstValueFrom} from "rxjs";
+import {distinctUntilChanged, map, Observable, of, shareReplay, switchMap} from "rxjs";
 import {StorageService} from "../storage/storage.service";
 import {Dataset} from "../../models/dataset";
 
@@ -11,58 +11,31 @@ import {Dataset} from "../../models/dataset";
 })
 export class DatasetService {
 
+  public datasets$: Observable<Dataset[]>;
+
   constructor(
     @Inject(PROJECT_NAME) private projectName: string,
     private authenticationService: AuthenticationService,
     private apiService: APIService,
     private storageService: StorageService,
   ) {
-    // Always clear the stored datasets when the user logs out.
-    this.authenticationService.user$.pipe(distinctUntilChanged()).subscribe((user) => {
-      if (!user)
-        this.clear();
-      else
-        this.refresh();
-    });
+    this.datasets$ = this.authenticationService.user$.pipe(distinctUntilChanged())
+      .pipe(
+        switchMap((user) => {
+          if (!user) return of([]);
+          return this.apiService.getDatasets();
+        }),
+        shareReplay(1),
+      );
   }
 
-  /**
-   * Refresh from the API the dataset information into storage.
-   */
-  async refresh() {
-    // Get the datasets from the API Service.
-    const datasets = await firstValueFrom(this.apiService.getDatasets());
-
-    // Store each of these datasets in storage.
-    await Promise.all(
-      datasets.map(dataset => this.storageService.store('Dataset_' + dataset.name, dataset))
+  getDataset$(name: string): Observable<Dataset | null> {
+    return this.datasets$.pipe(
+      map(datasets => {
+        const found = datasets.find(dataset => dataset.name === name);
+        return found ? found : null;
+      })
     );
-  }
-
-  /**
-   * Clears all the datasets from storage.
-   */
-  async clear() {
-    const datasets = await this.storageService.getPrefixed('Dataset_');
-    await Promise.all(
-      Object.keys(datasets).map(key => this.storageService.remove(key)),
-    );
-  }
-
-  /**
-   * Get the dataset by name.
-   *
-   * @param dataset
-   */
-  async get(dataset: string): Promise<Dataset> {
-    return this.storageService.load('Dataset_' + dataset);
-  }
-
-  /**
-   * Get all the datasets.
-   */
-  async getAll(): Promise<Dataset[]> {
-    return this.storageService.getPrefixed('Dataset_');
   }
 
 }

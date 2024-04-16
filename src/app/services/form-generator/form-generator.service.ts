@@ -19,6 +19,7 @@ export class FormGeneratorService {
   }
 
   private getConstraints(constraints: any) {
+    if (!constraints) return [];
     return Object.keys(constraints)
       .filter(name => this.isValidatedConstraint(name, constraints))
       .map(name => this.getConstraint(name, constraints[name]));
@@ -72,7 +73,7 @@ export class FormGeneratorService {
 
   private isRequiredField(field: any): boolean {
     if (typeof field === 'object') {
-      return !!field.required;
+      return !!field.required || (field.constraints && field.constraints.required);
     } else {
       return false;
     }
@@ -105,6 +106,11 @@ export class FormGeneratorService {
     return options;
   }
 
+  private getFieldDefaultValue(field: any): any | null {
+    if (!this.isHiddenField(field)) return null;
+    return field.constraints.enum[0];
+  }
+
   private getFieldDescriptor(field: any): FieldDescriptor {
     const type: string = this.getFieldType(field);
 
@@ -115,7 +121,7 @@ export class FormGeneratorService {
       format: field.format,
       type: type,
       options: type === 'select' ? this.getOptions(field) : undefined,
-      defaultValue: type === 'hidden' ? field.constraints.enum[0] : null
+      defaultValue: this.getFieldDefaultValue(field),
     };
   }
 
@@ -123,10 +129,14 @@ export class FormGeneratorService {
     return dataset.data_package.resources[resource].schema.fields;
   }
 
-  getFormGroup(formBuilder: FormBuilder, dataset: any, resource: number = 0): FormGroup {
+  getFormGroup(formBuilder: FormBuilder, values: any, dataset: any, resource: number = 0): FormGroup {
     const group: any = {};
     this.getFields(dataset, resource).forEach((field: any) => {
-      group[field.name] = ['', this.getConstraints(field.constraints)];
+      let defaultValue = this.getFieldDefaultValue(field) || '';
+      if (values.hasOwnProperty(field.name)) {
+        defaultValue = values[field.name];
+      }
+      group[field.name] = [defaultValue, this.getConstraints(field.constraints)];
     })
     return formBuilder.group(group);
   }

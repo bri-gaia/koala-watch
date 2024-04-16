@@ -13,6 +13,7 @@ import {
   IonToolbar
 } from '@ionic/angular/standalone';
 import {RecordFormComponent} from "../../components/record-form/record-form.component";
+import {DATASET_NAME_OBSERVATION} from "../../tokens/app";
 
 @Component({
   selector: 'app-observation-form-page',
@@ -22,6 +23,8 @@ import {RecordFormComponent} from "../../components/record-form/record-form.comp
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonSegment, IonSegmentButton, IonButtons, IonMenuButton, IonButton, RecordFormComponent]
 })
 export class ObservationFormPage implements OnInit {
+
+  public DATASET_NAME_OBSERVATION = DATASET_NAME_OBSERVATION;
 
   @Input()
   readonly: boolean = false;

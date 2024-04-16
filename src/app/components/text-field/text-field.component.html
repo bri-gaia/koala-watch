@@ -1,0 +1,15 @@
+<ion-item *ngIf="field && formGroup" [formGroup]="formGroup">
+  <ion-input labelPlacement="stacked"
+             [placeholder]="field.description || ''"
+             [formControlName]="field.key"
+             [readonly]="readonly"
+             [type]="field.type"
+             (ionBlur)="checkErrors()">
+
+    <div slot="label">
+      {{ field.label }}
+      <ion-text *ngIf="error" color="danger">({{ error }})</ion-text>
+    </div>
+
+  </ion-input>
+</ion-item>

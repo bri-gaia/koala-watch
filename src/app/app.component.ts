@@ -25,11 +25,11 @@ import {
   bookmarkOutline,
   bookmarkSharp,
   heartOutline,
-  heartSharp,
+  heartSharp, locateOutline, locateSharp,
   mailOutline,
   mailSharp,
   paperPlaneOutline,
-  paperPlaneSharp,
+  paperPlaneSharp, pinOutline, pinSharp,
   trashOutline,
   trashSharp,
   warningOutline,
@@ -108,7 +108,11 @@ export class AppComponent {
       warningOutline,
       warningSharp,
       bookmarkOutline,
-      bookmarkSharp
+      bookmarkSharp,
+      pinOutline,
+      pinSharp,
+      locateOutline,
+      locateSharp,
     });
   }
 

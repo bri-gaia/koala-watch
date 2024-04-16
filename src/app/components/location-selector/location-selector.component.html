@@ -1,0 +1,40 @@
+<ng-container *ngIf="formGroup">
+  Location (Current Accuracy: Waiting for reading...)
+
+  <ion-buttons *ngIf="!readonly">
+
+    <ion-button color="primary"
+                (click)="doMapSelect()">
+      <ion-icon name="pin"></ion-icon>&nbsp; Map
+    </ion-button>
+
+    <ion-button color="primary"
+                (click)="doGpsSelect()">
+      <ion-icon name="locate"></ion-icon>&nbsp; GPS
+    </ion-button>
+
+  </ion-buttons>
+
+  <!--
+  <fa-icon icon="location-arrow"></fa-icon>&nbsp;
+  Location (Current
+  Accuracy: {{ lastLocation && lastLocation.coords ? ((lastLocation.coords.accuracy | number: '1.0-0') || 'Waiting for Reading...') : 'Waiting for Reading...' }}
+  )
+  <br/>
+  <br/><br/>
+
+  <ion-button *ngIf="!readonly"
+              color="primary"
+              (click)="openModal()"
+              class="item-divider-button-map">
+    <ion-icon name="pin"></ion-icon>&nbsp; Map
+  </ion-button>
+
+  <ion-button *ngIf="!readonly"
+              color="primary"
+              (click)="updateLocationFields()"
+              class="item-divider-button">
+    <ion-icon name="locate"></ion-icon>&nbsp; GPS
+  </ion-button>
+  -->
+</ng-container>

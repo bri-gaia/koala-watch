@@ -1,0 +1,16 @@
+<ion-item *ngIf="field && formGroup && field.options" [formGroup]="formGroup">
+  <ion-select labelPlacement="stacked"
+              [placeholder]="field.description || ''"
+              [formControlName]="field.key"
+              (ionBlur)="checkErrors()">
+
+    <div slot="label">
+      {{ field.label }}
+      <ion-text *ngIf="error" color="danger">({{ error }})</ion-text>
+    </div>
+
+    <ion-select-option *ngFor="let option of field.options" [value]="option.value">
+      {{ option.text }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>

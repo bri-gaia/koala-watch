@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {BehaviorSubject, Observable, of, switchMap} from 'rxjs';
+import {BehaviorSubject, Observable, shareReplay, switchMap} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {User} from "../../models/user";
 import {APIService} from "../api/api.service";
@@ -10,12 +10,20 @@ import {APIService} from "../api/api.service";
 })
 export class AuthenticationService {
 
-  private user = new BehaviorSubject<User | null>(null);
-  public user$ = this.user.asObservable();
+  private auth_token = new BehaviorSubject<string>(
+    localStorage.getItem('auth_token') || ""
+  );
+  public user$: Observable<User | null>;
 
   constructor(
     protected apiService: APIService
   ) {
+    this.user$ = this.auth_token.asObservable().pipe(
+      switchMap((token) => {
+        return this.apiService.whoAmI();
+      }),
+      shareReplay(1),
+    );
   }
 
   public getToken(): string | null {
@@ -24,14 +32,12 @@ export class AuthenticationService {
 
   private setToken(token: string) {
     localStorage.setItem('auth_token', token);
+    this.auth_token.next(token);
   }
 
   private clearToken() {
     localStorage.removeItem('auth_token');
-  }
-
-  public getCurrentUser(): User | null {
-    return this.user.value;
+    this.auth_token.next("");
   }
 
   public getCurrentUser$(): Observable<User | null> {
@@ -46,16 +52,11 @@ export class AuthenticationService {
         else
           this.clearToken();
       }),
-      switchMap((res) => res ? this.apiService.whoAmI() : of(null)),
-      tap((user: User | null) => {
-        this.user.next(user);
-      }),
       switchMap(() => this.user$),
     );
   }
 
   public logout() {
-    this.user.next(null);
     this.clearToken();
   }
 

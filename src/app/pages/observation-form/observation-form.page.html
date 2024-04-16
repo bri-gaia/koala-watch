@@ -29,7 +29,7 @@
   </ion-segment>
 
   <ng-container *ngIf="segment === 'form'">
-    <app-record-form dataset="" [readonly]="readonly">
+    <app-record-form [dataset]="DATASET_NAME_OBSERVATION" [readonly]="readonly">
 
     </app-record-form>
   </ng-container>

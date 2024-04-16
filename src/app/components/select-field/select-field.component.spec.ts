@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { LocationFieldComponent } from './location-field.component';
+import { SelectFieldComponent } from './select-field.component';
 
-describe('LocationFieldComponent', () => {
-  let component: LocationFieldComponent;
-  let fixture: ComponentFixture<LocationFieldComponent>;
+describe('SelectFieldComponent', () => {
+  let component: SelectFieldComponent;
+  let fixture: ComponentFixture<SelectFieldComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [LocationFieldComponent],
+      imports: [SelectFieldComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LocationFieldComponent);
+    fixture = TestBed.createComponent(SelectFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

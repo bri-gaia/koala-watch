@@ -11,8 +11,8 @@ export const AuthenticationGuardFn: CanActivateFn = (
 
   return true;
 
-  const user = authService.getCurrentUser();
-  if (user) {
+  const token = authService.getToken();
+  if (token) {
     // authorised so return true
     return true;
   }
