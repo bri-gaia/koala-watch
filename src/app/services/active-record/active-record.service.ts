@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ClientPhoto} from "../../models/client-photo";
 import {BehaviorSubject} from "rxjs";
+import {StorageService} from "../storage/storage.service";
+import { v4 as uuidv4 } from 'uuid';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,7 @@ export class ActiveRecordService {
   private _currentPhoto = new BehaviorSubject<number>(0);
   public currentPhoto$ = this._currentPhoto.asObservable();
 
-  constructor() {
+  constructor(private storageService: StorageService) {
   }
 
   clear() {
@@ -85,7 +88,14 @@ export class ActiveRecordService {
   save() {
     // TODO: Stores the active record into storage (which should list all the records of the user)
     // Once it is uploaded then it should display on the API.
-
+      const record = {
+        values: this._values.value,
+        status: this._status.value,
+        photos: this._photos.value,
+        currentPhoto: this._currentPhoto.value
+      };
+      const key = uuidv4();
+      this.storageService.store(key, record);
   }
 
 }

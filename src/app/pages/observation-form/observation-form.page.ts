@@ -136,6 +136,7 @@ export class ObservationFormPage implements OnInit {
   }
 
   doSave() {
+    return this.activeRecordService.save();
 
   }
 
