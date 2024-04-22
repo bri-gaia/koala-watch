@@ -22,6 +22,9 @@ import { RecordPhotosComponent } from "../../components/record-photos/record-pho
 import { PhotoService } from "../../services/photo/photo.service";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { faSave, faTrashCan, faCamera, faImage } from "@fortawesome/free-solid-svg-icons";
+import { StorageService } from "../../services/storage/storage.service";
+import { DatasetService } from "../../services/dataset/dataset.service";
+import { UUID } from "angular2-uuid";
 
 @Component({
   selector: 'app-observation-form-page',
@@ -65,6 +68,8 @@ export class ObservationFormPage implements OnInit {
     private activeRecordService: ActiveRecordService,
     private alertController: AlertController,
     private photoService: PhotoService,
+    private storageService: StorageService,
+    private datasetService: DatasetService,
   ) {
   }
 
@@ -144,7 +149,23 @@ export class ObservationFormPage implements OnInit {
   }
 
   doSave() {
-    return this.activeRecordService.save();
+    const formValues = this.activeRecordService.getValues();
+
+    this.storageService.putRecord({
+      // TODO check record valid
+      valid: true, //this.recordForm.valid,
+      // TODO set this on new record (in ionViewWillEnter?)
+      client_id: UUID.UUID(),
+      // TODO where should this value be coming from?
+      dataset: 105,
+      datasetName: DATASET_NAME_OBSERVATION,
+      // TODO get date from Record if set.
+      datetime: new Date().toISOString(),
+      data: formValues,
+      // TODO Count?
+      count: 0,
+      photoIds: [],
+    });
   }
 
 }

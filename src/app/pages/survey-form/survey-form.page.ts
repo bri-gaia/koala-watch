@@ -19,6 +19,8 @@ import { DATASET_NAME_TREESURVEY } from "../../tokens/app";
 import { faCamera, faImage, faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { ActiveRecordService } from "../../services/active-record/active-record.service";
 import { PhotoService } from "../../services/photo/photo.service";
+import { StorageService } from "../../services/storage/storage.service";
+import { UUID } from "angular2-uuid";
 
 @Component({
   selector: 'app-survey-form',
@@ -44,6 +46,7 @@ export class SurveyFormPage implements OnInit {
     private activeRecordService: ActiveRecordService,
     private alertController: AlertController,
     private photoService: PhotoService,
+    private storageService: StorageService,
   ) {
   }
 
@@ -82,5 +85,22 @@ export class SurveyFormPage implements OnInit {
   }
 
   doSave() {
+    const formValues = this.activeRecordService.getValues();
+
+    this.storageService.putRecord({
+      // TODO check record valid
+      valid: true, //this.recordForm.valid,
+      // TODO set this on new record (in ionViewWillEnter?)
+      client_id: UUID.UUID(),
+      // TODO where should this value be coming from?
+      dataset: 107,
+      datasetName: DATASET_NAME_TREESURVEY,
+      // TODO get date from Record if set.
+      datetime: new Date().toISOString(),
+      data: formValues,
+      // TODO Count?
+      count: 0,
+      photoIds: [],
+    });
   }
 }
