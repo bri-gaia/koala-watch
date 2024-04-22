@@ -11,9 +11,11 @@ export class NavigationService {
   ) { }
 
   goObservation() {
+    this.navCtrl.navigateForward("observation-form")
   }
 
   goCensus() {
+    this.navCtrl.navigateForward("census")
   }
 
   goSurvey() {

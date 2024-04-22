@@ -88,11 +88,15 @@ export const routes: Routes = [
         canActivate: [AuthenticationGuardFn],
         data: {dataset: 'census'},
       },
-      {
-        path: 'form',
-        loadComponent: () => import('./pages/census-form/census-form.page').then(m => m.CensusFormPage)
-      },
     ],
+  },
+  {
+    path: 'census-form',
+    loadComponent: () => import('./pages/census-form/census-form.page').then(m => m.CensusFormPage)
+  },
+  {
+    path: 'survey-form',
+    loadComponent: () => import('./pages/survey-form/survey-form.page').then(m => m.SurveyFormPage)
   },
   {
     path: 'records',
