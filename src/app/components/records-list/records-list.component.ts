@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { DatePipe, NgForOf, NgIf } from "@angular/common";
 import { ClientRecord } from "../../models/client-record";
+import { StorageService } from "../../services/storage/storage.service";
 
 @Component({
   selector: 'app-records-list',
@@ -34,26 +35,28 @@ export class RecordsListComponent implements OnInit {
   countIcon: string = "";
 
   _records: { data: ClientRecord, statusColor: string, altText: string }[] = [];
-  @Input()
-  set records(value: ClientRecord[]) {
-    this._records = value.map(record => {
-      return {
-        data: record,
-        statusColor: this.getStatusColor(record),
-        altText: this.getAltText(record),
-      };
-    });
-  }
 
   @Output()
   onRecordClicked = new EventEmitter<ClientRecord>();
 
-  constructor() {
+  protected clientRecords$: any[] = [];
+
+  constructor(
+    private storageService: StorageService,
+  ) {
   }
 
   ngOnInit() {
+    this.storageService.getAllRecords().then((clientRecord) => {
+      if (Array.isArray(clientRecord)) {
+        clientRecord.forEach(record => this._records.push({
+          data: record,
+          statusColor: this.getStatusColor(record),
+          altText: this.getAltText(record)
+        }));
+      }
+    });
   }
-
 
   public getStatusColor(record: ClientRecord) {
     if (record.id) {
