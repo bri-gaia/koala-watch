@@ -63,7 +63,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'observation-form',
+    path: 'observation/form',
     loadComponent: () => import('./pages/observation-form/observation-form.page').then(m => m.ObservationFormPage)
   },
   {
@@ -91,11 +91,35 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'census-form',
+    path: 'census/form',
     loadComponent: () => import('./pages/census-form/census-form.page').then(m => m.CensusFormPage)
   },
   {
-    path: 'survey-form',
+    path: 'survey',
+    loadComponent: () => import('./pages/survey/survey.page').then(m => m.SurveyPage),
+    canActivate: [AuthenticationGuardFn],
+    children: [
+      {
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full',
+      },
+      {
+        path: 'list',
+        loadComponent: () => import('./pages/list/list.page').then(m => m.ListPage),
+        canActivate: [AuthenticationGuardFn],
+        data: {dataset: 'census'},
+      },
+      {
+        path: 'map',
+        loadComponent: () => import('./pages/map/map.page').then(m => m.MapPage),
+        canActivate: [AuthenticationGuardFn],
+        data: {dataset: 'census'},
+      },
+    ],
+  },
+  {
+    path: 'survey/form',
     loadComponent: () => import('./pages/survey-form/survey-form.page').then(m => m.SurveyFormPage)
   },
   {
