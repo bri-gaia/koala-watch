@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ClientPhoto} from "../../models/client-photo";
 import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../storage/storage.service";
-import { v4 as uuidv4 } from 'uuid';
+import { UUID } from "angular2-uuid";
 
 
 @Injectable({
@@ -94,7 +94,7 @@ export class ActiveRecordService {
         photos: this._photos.value,
         currentPhoto: this._currentPhoto.value
       };
-      const key = uuidv4();
+      const key = UUID.UUID();
       this.storageService.store(key, record);
   }
 
