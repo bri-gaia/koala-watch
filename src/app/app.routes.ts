@@ -4,7 +4,7 @@ import {AuthenticationGuardFn} from "./services/authentication/authentication.gu
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'records',
+    redirectTo: 'observation',
     pathMatch: 'full',
   },
   {
@@ -123,11 +123,6 @@ export const routes: Routes = [
   {
     path: 'survey/form',
     loadComponent: () => import('./pages/survey-form/survey-form.page').then(m => m.SurveyFormPage),
-    canActivate: [AuthenticationGuardFn],
-  },
-  {
-    path: 'records',
-    loadComponent: () => import('./pages/records/records.page').then(m => m.RecordsPage),
     canActivate: [AuthenticationGuardFn],
   },
 ];
