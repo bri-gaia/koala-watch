@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import {
   AlertController,
   IonButton,
@@ -15,13 +15,13 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/angular/standalone';
-import {RecordFormComponent} from "../../components/record-form/record-form.component";
-import {DATASET_NAME_OBSERVATION} from "../../tokens/app";
-import {ActiveRecordService} from "../../services/active-record/active-record.service";
-import {RecordPhotosComponent} from "../../components/record-photos/record-photos.component";
-import {PhotoService} from "../../services/photo/photo.service";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {faSave, faTrashCan, faCamera, faImage} from "@fortawesome/free-solid-svg-icons";
+import { RecordFormComponent } from "../../components/record-form/record-form.component";
+import { DATASET_NAME_OBSERVATION } from "../../tokens/app";
+import { ActiveRecordService } from "../../services/active-record/active-record.service";
+import { RecordPhotosComponent } from "../../components/record-photos/record-photos.component";
+import { PhotoService } from "../../services/photo/photo.service";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { faSave, faTrashCan, faCamera, faImage } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-observation-form-page',

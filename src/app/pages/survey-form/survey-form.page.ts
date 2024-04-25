@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -12,13 +12,13 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/angular/standalone';
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {RecordFormComponent} from "../../components/record-form/record-form.component";
-import {RecordPhotosComponent} from "../../components/record-photos/record-photos.component";
-import {DATASET_NAME_TREESURVEY} from "../../tokens/app";
-import {faCamera, faImage, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import {ActiveRecordService} from "../../services/active-record/active-record.service";
-import {PhotoService} from "../../services/photo/photo.service";
+import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { RecordFormComponent } from "../../components/record-form/record-form.component";
+import { RecordPhotosComponent } from "../../components/record-photos/record-photos.component";
+import { DATASET_NAME_TREESURVEY } from "../../tokens/app";
+import { faCamera, faImage, faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { ActiveRecordService } from "../../services/active-record/active-record.service";
+import { PhotoService } from "../../services/photo/photo.service";
 
 @Component({
   selector: 'app-survey-form',
