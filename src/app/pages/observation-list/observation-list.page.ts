@@ -52,7 +52,4 @@ export class ObservationListPage implements OnInit {
     this.navigationService.goCensus();
   }
 
-  doRecord(record: ClientRecord) {
-  }
-
 }
