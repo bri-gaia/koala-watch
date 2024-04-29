@@ -3,12 +3,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   IonButtons,
-  IonContent, IonFab, IonFabButton,
+  IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
   IonMenuButton,
-  IonTabBar, IonTabButton, IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonFabList,
+  IonImg
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -16,7 +22,7 @@ import {
   templateUrl: './observation.page.html',
   styleUrls: ['./observation.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonMenuButton, IonTabBar, IonTabButton, IonTabs, IonFab, IonFabButton]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonMenuButton, IonTabBar, IonTabButton, IonTabs, IonFab, IonFabButton, IonFabList, IonImg]
 })
 export class ObservationPage implements OnInit {
 
