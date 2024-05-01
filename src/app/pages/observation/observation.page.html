@@ -10,11 +10,13 @@
 <ion-content>
   <ion-tabs>
     <ion-tab-bar slot="top">
-      <ion-tab-button tab="list">
-        List
+      <ion-tab-button class="ion-tab-button" tab="list">
+        <fa-icon class="ion-tab-button__icon" [icon]="faList"/>
+        <ion-label class="ion-tab-button__text">List View</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="map">
-        Map
+      <ion-tab-button class="ion-tab-button" tab="map">
+        <fa-icon class="ion-tab-button__icon" [icon]="faMap"/>
+        <ion-label class="ion-tab-button__text">Map</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
