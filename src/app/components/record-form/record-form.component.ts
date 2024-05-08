@@ -17,7 +17,10 @@ import { FieldComponent } from "../field/field.component";
 import { HiddenFieldComponent } from "../hidden-field/hidden-field.component";
 import { LocationSelectorComponent } from "../location-selector/location-selector.component";
 import { ActiveRecordService } from "../../services/active-record/active-record.service";
-import { IonItem, IonItemDivider, IonItemGroup, IonList } from "@ionic/angular/standalone";
+import { IonItem, IonItemDivider, IonItemGroup, IonLabel, IonList } from "@ionic/angular/standalone";
+import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { faCalendar as farCalendar, faStar as farStar } from "@fortawesome/free-regular-svg-icons";
+import { faLocationArrow, faStar } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   standalone: true,
@@ -45,6 +48,8 @@ import { IonItem, IonItemDivider, IonItemGroup, IonList } from "@ionic/angular/s
     IonItem,
     IonItemGroup,
     IonItemDivider,
+    FaIconComponent,
+    IonLabel,
   ]
 })
 export class RecordFormComponent implements OnInit, OnChanges {
@@ -112,4 +117,8 @@ export class RecordFormComponent implements OnInit, OnChanges {
     this.activeRecordService.setStatus(value);
   }
 
+  protected readonly farCalendar = farCalendar;
+  protected readonly faStar = faStar;
+  protected readonly farStar = farStar;
+  protected readonly faLocationArrow = faLocationArrow;
 }

@@ -4,7 +4,7 @@
 
       <ion-item-group *ngIf="fields.dateFields && fields.dateFields.length">
         <ion-item-divider color="secondary">
-          Dates
+          <ion-label><fa-icon [icon]="farCalendar"></fa-icon>Dates</ion-label>
         </ion-item-divider>
 
         <ion-list>
@@ -16,7 +16,7 @@
 
       <ion-item-group *ngIf="fields.locationFields && fields.locationFields.length">
         <ion-item-divider color="secondary">
-          <app-location-selector [formGroup]="form" [readonly]="readonly"/>
+          <ion-label><fa-icon [icon]="faLocationArrow"></fa-icon><app-location-selector [formGroup]="form" [readonly]="readonly"/></ion-label>
         </ion-item-divider>
 
         <ion-list>
@@ -28,7 +28,7 @@
 
       <ion-item-group *ngIf="fields.requiredFields && fields.requiredFields.length">
         <ion-item-divider color="secondary">
-          Required fields
+          <ion-label><fa-icon [icon]="faStar"></fa-icon>Required fields</ion-label>
         </ion-item-divider>
 
         <ion-list>
@@ -40,7 +40,7 @@
 
       <ion-item-group *ngIf="fields.optionalFields && fields.optionalFields.length">
         <ion-item-divider color="secondary">
-          Optional fields
+          <ion-label><fa-icon [icon]="farStar"></fa-icon>Optional fields</ion-label>
         </ion-item-divider>
 
         <ion-list>
